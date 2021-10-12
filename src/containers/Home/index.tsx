@@ -17,7 +17,7 @@ import {Transaction} from 'model/Transaction';
 // import DeliveryAddress from './components/DeliveryAddress';
 // import Search from './components/Search';
 // import Separator from './components/Separator';
-// import MerchantItem from './components/MerchantItem';
+import TransactionItem from './components/TransactionItem';
 // import Merchant, {MerchantApiPayload} from '../models/merchant';
 // import {debounce} from 'lodash';
 
@@ -73,39 +73,34 @@ class HomeScreen extends React.Component<Props, State> {
   //     }
   //   }, 50);
 
-  //   renderItem({item}) {
-  //     return <MerchantItem merchant={item} />;
-  //   }
+  renderItem({item}) {
+    return <TransactionItem transaction={item} />;
+  }
   render() {
     console.log('hung this.props.transactionList:', this.props.transactionList);
 
     return (
       <SafeAreaView style={styles.container}>
-        {/* <DeliveryAddress />
-        <Search />
-        <Separator />
         <FlatList
           style={styles.listContainer}
-          data={this.state.merchantList}
+          data={this.props.transactionList}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `list_item_${index}`}
           ListEmptyComponent={() => <View />}
-          ListFooterComponent={() =>
-            this.props.isGettingMerchantList && (
-              <View style={styles.footerIndicator}>
-                <ActivityIndicator />
-              </View>
-            )
-          }
-          onEndReachedThreshold={0.8}
-          onEndReached={() => this.onEndReached()}
+          //   ListFooterComponent={() =>
+          //     this.props.isGettingMerchantList && (
+          //       <View style={styles.footerIndicator}>
+          //         <ActivityIndicator />
+          //       </View>
+          //     )
+          //   }
+          //   onEndReachedThreshold={0.8}
+          //   onEndReached={() => this.onEndReached()}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListHeaderComponent={() => (
-            <Text style={styles.listHeaderText}>Restaurants near you</Text>
+            <Text style={styles.listHeaderText}>TransactionList</Text>
           )}
-        /> */}
-
-        <Text>djsjjksjk</Text>
+        />
       </SafeAreaView>
     );
   }
