@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {ResponseModel} from 'model/ResponseModel';
 
-export function axiosGet(URL: String, config: any = {}): ResponseModel {
+export function axiosGet(URL: string, config: any = {}): ResponseModel {
   return axios
     .get(URL, config)
     .then(response => {
@@ -25,7 +25,7 @@ export function axiosGet(URL: String, config: any = {}): ResponseModel {
 }
 
 export function axiosPost(
-  URL: String,
+  URL: string,
   post: any,
   config: any = {},
 ): ResponseModel {

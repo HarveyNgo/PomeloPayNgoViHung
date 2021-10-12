@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
-// import {getMerchantList} from '../actions/merchant';
+import {getTransactionList} from 'actions/transactions';
+import {Transaction} from 'model/Transaction';
 // import {ActionType} from '../actions/index';
 
 // import DeliveryAddress from './components/DeliveryAddress';
@@ -21,8 +22,8 @@ import {connect} from 'react-redux';
 // import {debounce} from 'lodash';
 
 export interface Props {
-  //   getMerchantList: any;
-  //   merchantResult: MerchantApiPayload;
+  getTransactionList: any;
+  transactionList: Array<Transaction>;
   //   isGettingMerchantList: boolean;
   //   isGotMerchantList: boolean;
 }
@@ -42,9 +43,10 @@ class HomeScreen extends React.Component<Props, State> {
     };
   }
 
-  //   componentDidMount() {
-  //     this.props.getMerchantList({page: 1});
-  //   }
+  componentDidMount() {
+    this.props.getTransactionList();
+  }
+
   //   componentDidUpdate(prevProps: Props, prevState: State) {
   //     if (prevProps.isGettingMerchantList && !this.props.isGettingMerchantList) {
   //       if (this.props.isGotMerchantList) {
@@ -75,7 +77,7 @@ class HomeScreen extends React.Component<Props, State> {
   //     return <MerchantItem merchant={item} />;
   //   }
   render() {
-    // console.log('hung this.state.merchantList:', this.state.merchantList);
+    console.log('hung this.props.transactionList:', this.props.transactionList);
 
     return (
       <SafeAreaView style={styles.container}>
@@ -137,13 +139,13 @@ const styles = StyleSheet.create<Style>({
 });
 
 const mapStateToProps = state => ({
-  //   merchantResult: state.merchant.merchantResult,
+  transactionList: state.transactions.transactionList,
   //   isGettingMerchantList: state.merchant.isGettingMerchantList,
   //   isGotMerchantList: state.merchant.isGotMerchantList,
 });
 
 const mapDiaptchToProps = {
-  //   getMerchantList,
+  getTransactionList,
 };
 
 export default connect(mapStateToProps, mapDiaptchToProps)(HomeScreen);
