@@ -24,13 +24,13 @@ import TransactionItem from './components/TransactionItem';
 export interface Props {
   getTransactionList: any;
   transactionList: Array<Transaction>;
-  //   isGettingMerchantList: boolean;
-  //   isGotMerchantList: boolean;
+  isGettingTransactionList: boolean;
+  isGotTransactionList: boolean;
 }
 interface State {
   //   currentPage: number;
   //   maxPage: number;
-  //   merchantList: Array<Merchant>;
+  transactionList: Array<Transaction>;
 }
 
 class HomeScreen extends React.Component<Props, State> {
@@ -39,7 +39,7 @@ class HomeScreen extends React.Component<Props, State> {
     this.state = {
       //   currentPage: 1,
       //   maxPage: 1,
-      //   merchantList: [],
+      transactionList: [],
     };
   }
 
@@ -47,23 +47,21 @@ class HomeScreen extends React.Component<Props, State> {
     this.props.getTransactionList();
   }
 
-  //   componentDidUpdate(prevProps: Props, prevState: State) {
-  //     if (prevProps.isGettingMerchantList && !this.props.isGettingMerchantList) {
-  //       if (this.props.isGotMerchantList) {
-  //         const maxPage = this.props.merchantResult?.maxPage;
-  //         const list = this.props.merchantResult?.data;
-  //         const currentPage = this.props.merchantResult?.currentPage;
-  //         this.setState(prevState => {
-  //           return {
-  //             ...prevState,
-  //             merchantList: [...prevState.merchantList, ...list],
-  //             maxPage,
-  //             currentPage: currentPage + 1,
-  //           };
-  //         });
-  //       }
-  //     }
-  //   }
+  componentDidUpdate(prevProps: Props, prevState: State) {
+    if (
+      prevProps.isGettingTransactionList &&
+      !this.props.isGettingTransactionList
+    ) {
+      if (this.props.isGotTransactionList) {
+        this.setState(prevState => {
+          return {
+            ...prevState,
+            transactionList: this.props.transactionList,
+          };
+        });
+      }
+    }
+  }
 
   //   onEndReached = debounce(() => {
   //     const {currentPage, maxPage} = this.state;
@@ -83,7 +81,7 @@ class HomeScreen extends React.Component<Props, State> {
       <SafeAreaView style={styles.container}>
         <FlatList
           style={styles.listContainer}
-          data={this.props.transactionList}
+          data={this.state.transactionList}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `list_item_${index}`}
           ListEmptyComponent={() => <View />}
@@ -135,8 +133,8 @@ const styles = StyleSheet.create<Style>({
 
 const mapStateToProps = state => ({
   transactionList: state.transactions.transactionList,
-  //   isGettingMerchantList: state.merchant.isGettingMerchantList,
-  //   isGotMerchantList: state.merchant.isGotMerchantList,
+  isGettingTransactionList: state.transactions.isGettingTransactionList,
+  isGotTransactionList: state.transactions.isGotTransactionList,
 });
 
 const mapDiaptchToProps = {
