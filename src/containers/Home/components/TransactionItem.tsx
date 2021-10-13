@@ -65,14 +65,6 @@ const MenuItemVIew = styled(MenuItem).attrs(({isRefund, onPress}) => ({
   onPress: onPress,
 }))``;
 
-// const SaveContainer = styled(TouchableOpacity)`
-//   border-radius: 30px;
-//   background-color: ${({haveSpendAmount}) =>
-//     haveSpendAmount ? '#01d167' : 'gray'};
-//   align-items: center;
-//   padding: 20px;
-// `;
-
 const TransactionItem: React.FC<IProps> = ({transaction}) => {
   const [isRefund, setIsRefund] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
