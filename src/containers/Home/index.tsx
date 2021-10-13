@@ -9,17 +9,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
-
 import {getTransactionList} from 'actions/transactions';
 import {Transaction} from 'model/Transaction';
-// import {ActionType} from '../actions/index';
-
-// import DeliveryAddress from './components/DeliveryAddress';
-// import Search from './components/Search';
-// import Separator from './components/Separator';
 import TransactionItem from './components/TransactionItem';
-// import Merchant, {MerchantApiPayload} from '../models/merchant';
-// import {debounce} from 'lodash';
 
 export interface Props {
   getTransactionList: any;
@@ -28,8 +20,6 @@ export interface Props {
   isGotTransactionList: boolean;
 }
 interface State {
-  //   currentPage: number;
-  //   maxPage: number;
   transactionList: Array<Transaction>;
 }
 
@@ -37,8 +27,6 @@ class HomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      //   currentPage: 1,
-      //   maxPage: 1,
       transactionList: [],
     };
   }
@@ -63,20 +51,10 @@ class HomeScreen extends React.Component<Props, State> {
     }
   }
 
-  //   onEndReached = debounce(() => {
-  //     const {currentPage, maxPage} = this.state;
-
-  //     if (currentPage <= maxPage && !this.props.isGettingMerchantList) {
-  //       this.props.getMerchantList({page: currentPage});
-  //     }
-  //   }, 50);
-
   renderItem({item}) {
     return <TransactionItem transaction={item} />;
   }
   render() {
-    console.log('hung this.props.transactionList:', this.props.transactionList);
-
     return (
       <SafeAreaView style={styles.container}>
         <FlatList

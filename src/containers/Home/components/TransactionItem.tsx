@@ -11,6 +11,8 @@ import {Transaction} from 'model/Transaction';
 import styled from 'styled-components';
 import {formatDateTime, DateTimeFormatter} from 'utils/DateUtility';
 import {formatMoney, MoneyFormatter} from 'utils/MoneyFormatter';
+import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
+import imgSetting from 'resource/setting.png';
 
 interface IProps {
   transaction: Transaction;
@@ -18,6 +20,9 @@ interface IProps {
 
 const Container = styled(View)`
   padding: 10px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const ProviderRow = styled(View)`
@@ -40,48 +45,91 @@ const StateDiv = styled(View)`
   flex-direction: row;
 `;
 
-const BlueText = styled(Text)`
-  color: blue;
+const SettingImg = styled(Image).attrs(({source}) => ({
+  source: source,
+  resizeMode: 'contain',
+}))`
+  width: 15px;
+  height: 15px;
 `;
+
+const InfoDiv = styled(View)`
+  flex: 1;
+`;
+const SettingDiv = styled(View)`
+  margin-horizontal: 10px;
+`;
+
+const MenuItemVIew = styled(MenuItem).attrs(({isRefund, onPress}) => ({
+  disabled: isRefund,
+  onPress: onPress,
+}))``;
+
+// const SaveContainer = styled(TouchableOpacity)`
+//   border-radius: 30px;
+//   background-color: ${({haveSpendAmount}) =>
+//     haveSpendAmount ? '#01d167' : 'gray'};
+//   align-items: center;
+//   padding: 20px;
+// `;
 
 const TransactionItem: React.FC<IProps> = ({transaction}) => {
   const [isRefund, setIsRefund] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+
   const refundHanlder = () => {
     setIsRefund(true);
+    setShowMenu(false);
   };
+
+  const hideMenuHandler = () => {
+    setShowMenu(false);
+  };
+  const showMenuHandler = () => {
+    setShowMenu(true);
+  };
+
   return (
     <Container>
-      <ProviderRow>
-        <Text>{transaction.provider}</Text>
-        <AmountDiv>
+      <InfoDiv>
+        <ProviderRow>
+          <Text>{transaction.initiatorDetails?.contactName}</Text>
+          <AmountDiv>
+            <Text>
+              {formatMoney(
+                transaction.amount,
+                MoneyFormatter.ZERO_DECIMAL_FORMAT,
+              )}{' '}
+            </Text>
+            <Text>{transaction.currency}</Text>
+          </AmountDiv>
+        </ProviderRow>
+        <StatusRow>
+          <StateDiv>
+            <Text>{isRefund ? 'REFUND' : transaction.state} </Text>
+          </StateDiv>
           <Text>
-            {formatMoney(
-              transaction.amount,
-              MoneyFormatter.ZERO_DECIMAL_FORMAT,
-            )}{' '}
+            {formatDateTime(
+              transaction.created,
+              DateTimeFormatter.DD_MM_YYYY_HH_MM,
+            )}
           </Text>
-
-          <Text>{transaction.currency}</Text>
-        </AmountDiv>
-      </ProviderRow>
-      <StatusRow>
-        <StateDiv>
-          <Text>{isRefund ? 'REFUND' : transaction.state} </Text>
-          {!isRefund ? (
-            <TouchableOpacity onPress={() => refundHanlder()}>
-              <BlueText>refund</BlueText>
+        </StatusRow>
+      </InfoDiv>
+      <SettingDiv>
+        <Menu
+          visible={showMenu}
+          anchor={
+            <TouchableOpacity onPress={() => showMenuHandler()}>
+              <SettingImg source={imgSetting} />
             </TouchableOpacity>
-          ) : (
-            <></>
-          )}
-        </StateDiv>
-        <Text>
-          {formatDateTime(
-            transaction.created,
-            DateTimeFormatter.DD_MM_YYYY_HH_MM,
-          )}
-        </Text>
-      </StatusRow>
+          }
+          onRequestClose={() => hideMenuHandler()}>
+          <MenuItemVIew isRefund={isRefund} onPress={() => refundHanlder()}>
+            Refund
+          </MenuItemVIew>
+        </Menu>
+      </SettingDiv>
     </Container>
   );
 };
