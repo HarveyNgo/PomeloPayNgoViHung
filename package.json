@@ -34,6 +34,9 @@
     "react-test-renderer": "17.0.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@react-native|react-native|react-native-modal|react-native-animatable|react-native-material-menu)/)"
+    ]
   }
 }

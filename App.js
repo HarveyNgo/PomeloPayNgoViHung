@@ -19,26 +19,10 @@ import {
 import HomeScreen from 'containers/Home';
 import {Provider} from 'react-redux';
 import store from 'configs/store';
-import axiosDebugger from 'axiosConfig/AxiosDebugger';
-
-// const App: () => React.ReactNode = () => {
-//   useEffect(() => {
-//     axiosDebugger();
-//   }, []);
-
-//   return (
-//     <Provider store={store}>
-//       <View>
-//         <HomeScreen />
-//       </View>
-//     </Provider>
-//   );
-// };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    axiosDebugger();
   }
 
   render() {

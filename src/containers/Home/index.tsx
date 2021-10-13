@@ -63,15 +63,6 @@ class HomeScreen extends React.Component<Props, State> {
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `list_item_${index}`}
           ListEmptyComponent={() => <View />}
-          //   ListFooterComponent={() =>
-          //     this.props.isGettingMerchantList && (
-          //       <View style={styles.footerIndicator}>
-          //         <ActivityIndicator />
-          //       </View>
-          //     )
-          //   }
-          //   onEndReachedThreshold={0.8}
-          //   onEndReached={() => this.onEndReached()}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListHeaderComponent={() => (
             <Text style={styles.listHeaderText}>TransactionList</Text>
